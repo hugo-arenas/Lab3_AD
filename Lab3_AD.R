@@ -62,6 +62,12 @@ tabla <- tabla[!bool.values,]
 bool.values <- tabla$breast.quad =='?'
 tabla <- tabla[!bool.values,]
 
+menopause <- as.factor(tabla$menopause)
+node.caps <- as.factor(tabla$node.caps)
+deg.malig <- as.factor(tabla$deg.malig)
+breast <- as.factor(tabla$breast)
+irradiat <- as.factor(tabla$irradiat)
+
 
 tabla$class <- as.factor(tabla$class)
 tabla$age <- unclass(as.factor(tabla$age)) 
@@ -173,6 +179,11 @@ print(ggdraw(boxplot.irradiat))
 
 #Se crean las reglas para las variables "age", "tumor.size", "inv.nodes" y "breast.quad".
 tabla.reglas = tabla
+tabla.reglas$menopause <- menopause 
+tabla.reglas$node.caps <- node.caps
+tabla.reglas$deg.malig <- deg.malig
+tabla.reglas$breast <- breast
+tabla.reglas$irradiat <- irradiat
 age = c(-Inf, 2, 4, Inf)
 age.names = c("adulto joven", "adulto", "adulto mayor")
 
