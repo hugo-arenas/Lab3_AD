@@ -205,7 +205,7 @@ tabla.reglas$breast.quad = cut(tabla.reglas$breast.quad, breaks = breast.quad, l
 
 reglas = apriori(
   data = tabla.reglas, 
-  parameter=list(support = 0.2, minlen = 2, maxlen = 6, target="rules"),
+  parameter=list(support = 0.04, minlen = 2, maxlen = 6, target="rules"),
   appearance=list(rhs = c("class=no-recurrence-events", "class=recurrence-events"))
 )
 
