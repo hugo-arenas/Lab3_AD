@@ -55,6 +55,13 @@ columns <- c("class",
 
 tabla <- read.csv(file, col.names = columns)
 
+#Se sacan los datos nulos del datagrama
+bool.values <- tabla$node.caps=='?'
+tabla <- tabla[!bool.values,]
+
+bool.values <- tabla$breast.quad =='?'
+tabla <- tabla[!bool.values,]
+
 
 tabla$class <- as.factor(tabla$class)
 tabla$age <- unclass(as.factor(tabla$age)) 
@@ -67,12 +74,9 @@ tabla$breast <- unclass(as.factor(tabla$breast))
 tabla$breast.quad <- unclass(as.factor(tabla$breast.quad)) 
 tabla$irradiat <- unclass(as.factor(tabla$irradiat))
 
-#Se sacan los datos nulos del datagrama
-bool.values <- tabla$node.caps=='1'
-tabla <- tabla[!bool.values,]
-
-bool.values <- tabla$breast.quad =='1'
-tabla <- tabla[!bool.values,]
+tabla$breast.quad[tabla$breast.quad == 4] <- 6
+tabla$breast.quad[tabla$breast.quad == 3] <- 4
+tabla$breast.quad[tabla$breast.quad == 6] <- 3
 
 summary(tabla)
 
@@ -167,21 +171,25 @@ ydens = axis_canvas(boxplot.irradiat, axis = "y", coord_flip = TRUE) + geom_dens
 boxplot.irradiat = insert_yaxis_grob(boxplot.irradiat, ydens, grid::unit(.2, "null"), position = "right")
 print(ggdraw(boxplot.irradiat))
 
-#Se crean las reglas para las variables "age", "tumor.size" e "inv.nodes".
+#Se crean las reglas para las variables "age", "tumor.size", "inv.nodes" y "breast.quad".
 tabla.reglas = tabla
 age = c(-Inf, 2, 4, Inf)
 age.names = c("adulto joven", "adulto", "adulto mayor")
 
-tumor.size = c(-Inf, 4, 7, Inf)
+tumor.size = c(-Inf, 4, 8, Inf)
 tumor.size.names = c("pequeño", "mediano", "grande")
 
 inv.nodes = c(-Inf, 2, 5, Inf)
 inv.nodes.names = c("bajo", "medio", "alto")
 
+breast.quad = c(-Inf, 1, 3, Inf)
+breast.quad.names = c("central", "low", "up")
+
 #Se cambian variables por las reglas asociadas.
 tabla.reglas$age = cut(tabla.reglas$age, breaks = age, labels = age.names)
 tabla.reglas$tumor.size = cut(tabla.reglas$tumor.size, breaks = tumor.size, labels = tumor.size.names)
 tabla.reglas$inv.nodes = cut(tabla.reglas$inv.nodes, breaks = inv.nodes, labels = inv.nodes.names)
+tabla.reglas$breast.quad = cut(tabla.reglas$breast.quad, breaks = breast.quad, labels = breast.quad.names)
 
 
 reglas = apriori(
@@ -191,3 +199,8 @@ reglas = apriori(
 )
 
 inspect(sort(x = reglas, decreasing = TRUE, by = "confidence"))
+
+inspect(sort(x = reglas, decreasing = TRUE, by = "support"))
+
+inspect(sort(x = reglas, decreasing = TRUE, by = "coverage"))
+
