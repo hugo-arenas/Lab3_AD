@@ -213,5 +213,5 @@ inspect(sort(x = reglas, decreasing = TRUE, by = "confidence"))
 
 inspect(sort(x = reglas, decreasing = TRUE, by = "support"))
 
-inspect(sort(x = reglas, decreasing = TRUE, by = "coverage"))
+inspect(sort(x = reglas, decreasing = TRUE, by = "lift"))
 
