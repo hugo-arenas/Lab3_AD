@@ -176,7 +176,7 @@ tabla.reglas = tabla
 age = c(-Inf, 2, 4, Inf)
 age.names = c("adulto joven", "adulto", "adulto mayor")
 
-tumor.size = c(-Inf, 3, 8, Inf)
+tumor.size = c(-Inf, 4, 7, Inf)
 tumor.size.names = c("pequeño", "mediano", "grande")
 
 inv.nodes = c(-Inf, 2, 5, Inf)
