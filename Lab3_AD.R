@@ -84,6 +84,18 @@ tabla$breast.quad[tabla$breast.quad == 4] <- 6
 tabla$breast.quad[tabla$breast.quad == 3] <- 4
 tabla$breast.quad[tabla$breast.quad == 6] <- 3
 
+tabla$inv.nodes[tabla$inv.nodes == 2] <- 8
+tabla$inv.nodes[tabla$inv.nodes == 3] <- 9
+tabla$inv.nodes[tabla$inv.nodes == 4] <- 10
+
+tabla$inv.nodes[tabla$inv.nodes == 5] <- 2
+tabla$inv.nodes[tabla$inv.nodes == 6] <- 3
+tabla$inv.nodes[tabla$inv.nodes == 7] <- 4
+
+tabla$inv.nodes[tabla$inv.nodes == 8] <- 5
+tabla$inv.nodes[tabla$inv.nodes == 9] <- 6
+tabla$inv.nodes[tabla$inv.nodes == 10] <- 7
+
 summary(tabla)
 
 #Se realizan gráficos de cajas de cada variable con respecto a las clases.
