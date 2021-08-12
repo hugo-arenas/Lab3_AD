@@ -209,11 +209,15 @@ reglas = apriori(
   appearance=list(rhs = c("class=no-recurrence-events", "class=recurrence-events"))
 )
 
-inspect(sort(x = reglas, decreasing = TRUE, by = "confidence"))
+con <- sort(x = reglas, decreasing = TRUE, by = "confidence")
 
-inspect(sort(x = reglas, decreasing = TRUE, by = "support"))
+sop <- sort(x = reglas, decreasing = TRUE, by = "support")
 
-inspect(sort(x = reglas, decreasing = TRUE, by = "lift"))
+lift <-sort(x = reglas, decreasing = TRUE, by = "lift")
+
+inspect(head(con,10)) #Muestra las 10 reglas com mayor confianza 
+inspect(head(sop,10)) #Muestra las 10 reglas com mayor soporte
+inspect(head(lift,10))#Muestra las 10 reglas com mayor confianza 
 
 library(arulesViz)
 
