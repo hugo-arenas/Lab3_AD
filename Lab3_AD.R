@@ -215,3 +215,7 @@ inspect(sort(x = reglas, decreasing = TRUE, by = "support"))
 
 inspect(sort(x = reglas, decreasing = TRUE, by = "lift"))
 
+library(arulesViz)
+
+# Grafico de dispersion coloreado en funcion del lift
+plot(reglas, measure = c("support", "confidence"), shading = "lift")
