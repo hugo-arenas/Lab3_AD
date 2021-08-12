@@ -205,7 +205,7 @@ tabla.reglas$breast.quad = cut(tabla.reglas$breast.quad, breaks = breast.quad, l
 
 reglas = apriori(
   data = tabla.reglas, 
-  parameter=list(support = 0.04, minlen = 2, maxlen = 6, target="rules"),
+  parameter=list(support = 0.2, minlen = 2, maxlen = 6, target="rules"),
   appearance=list(rhs = c("class=no-recurrence-events", "class=recurrence-events"))
 )
 
@@ -215,11 +215,14 @@ sop <- sort(x = reglas, decreasing = TRUE, by = "support")
 
 lift <-sort(x = reglas, decreasing = TRUE, by = "lift")
 
-inspect(head(con,10)) #Muestra las 10 reglas com mayor confianza 
-inspect(head(sop,10)) #Muestra las 10 reglas com mayor soporte
-inspect(head(lift,10))#Muestra las 10 reglas com mayor confianza 
+print("Muestra las 10 reglas con mayor confianza.")
+inspect(head(con,10)) #Muestra las 10 reglas con mayor confianza
+print("Muestra las 10 reglas con mayor soporte.")
+inspect(head(sop,10)) #Muestra las 10 reglas con mayor soporte
+print("Muestra las 10 reglas con mayor lift.")
+inspect(head(lift,10))#Muestra las 10 reglas con mayor lift 
 
 library(arulesViz)
 
 # Grafico de dispersion coloreado en funcion del lift
-plot(reglas, measure = c("support", "confidence"), shading = "lift")
+print(plot(reglas, measure = c("support", "confidence"), shading = "lift"))
