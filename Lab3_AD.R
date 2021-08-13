@@ -230,7 +230,7 @@ tabla.reglas$breast.quad = cut(tabla.reglas$breast.quad, breaks = breast.quad, l
 reglas = apriori(
   data = tabla.reglas, 
   parameter=list(support = 0.2, minlen = 2, maxlen = 6, target="rules"),
-  appearance=list(rhs = c("class=no-recurrence-events", "class=recurrence-events"))
+  appearance=list(rhs = c("class=no-recurrence-events"))
 )
 
 con <- sort(x = reglas, decreasing = TRUE, by = "confidence")
@@ -239,14 +239,36 @@ sop <- sort(x = reglas, decreasing = TRUE, by = "support")
 
 lift <-sort(x = reglas, decreasing = TRUE, by = "lift")
 
-print("Muestra las 10 reglas con mayor confianza.")
-inspect(head(con,10)) #Muestra las 10 reglas con mayor confianza
-print("Muestra las 10 reglas con mayor soporte.")
-inspect(head(sop,10)) #Muestra las 10 reglas con mayor soporte
-print("Muestra las 10 reglas con mayor lift.")
-inspect(head(lift,10))#Muestra las 10 reglas con mayor lift 
+print("Muestra las 4 reglas con mayor confianza para no-recurrence-events.")
+inspect(head(con,4)) #Muestra las 4 reglas con mayor confianza
+print("Muestra las 4 reglas con mayor soporte para no-recurrence-events.")
+inspect(head(sop,4)) #Muestra las 4 reglas con mayor soporte
+print("Muestra las 4 reglas con mayor lift para no-recurrence-events.")
+inspect(head(lift,4))#Muestra las 4 reglas con mayor lift 
 
 library(arulesViz)
 
-# Grafico de dispersion coloreado en funcion del lift
+# Grafico de dispersion coloreado en funcion del lift para regla 1.
 print(plot(reglas, measure = c("support", "confidence"), shading = "lift"))
+
+reglas2 = apriori(
+  data = tabla.reglas, 
+  parameter=list(support = 0.018, minlen = 2, maxlen = 6, target="rules"),
+  appearance=list(rhs = c("class=recurrence-events"))
+)
+
+con2 <- sort(x = reglas2, decreasing = TRUE, by = "confidence")
+
+sop2 <- sort(x = reglas2, decreasing = TRUE, by = "support")
+
+lift2 <-sort(x = reglas2, decreasing = TRUE, by = "lift")
+
+print("Muestra las 4 reglas con mayor confianza para recurrence-events.")
+inspect(head(con2,4)) #Muestra las 4 reglas con mayor confianza
+print("Muestra las 4 reglas con mayor soporte para recurrence-events.")
+inspect(head(sop2,4)) #Muestra las 4 reglas con mayor soporte
+print("Muestra las 4 reglas con mayor lift para recurrence-events.")
+inspect(head(lift2,4))#Muestra las 4 reglas con mayor lift 
+
+# Grafico de dispersion coloreado en funcion del lift para regla 2.
+print(plot(reglas2, measure = c("support", "confidence"), shading = "lift"))
