@@ -80,6 +80,18 @@ tabla$breast <- unclass(as.factor(tabla$breast))
 tabla$breast.quad <- unclass(as.factor(tabla$breast.quad)) 
 tabla$irradiat <- unclass(as.factor(tabla$irradiat))
 
+tabla$tumor.size[tabla$tumor.size == 10] <- 12
+tabla$tumor.size[tabla$tumor.size == 9] <- 10
+tabla$tumor.size[tabla$tumor.size == 8] <- 9
+tabla$tumor.size[tabla$tumor.size == 7] <- 8
+tabla$tumor.size[tabla$tumor.size == 6] <- 7
+tabla$tumor.size[tabla$tumor.size == 5] <- 6
+tabla$tumor.size[tabla$tumor.size == 4] <- 5
+tabla$tumor.size[tabla$tumor.size == 3] <- 4
+tabla$tumor.size[tabla$tumor.size == 2] <- 3
+tabla$tumor.size[tabla$tumor.size == 12] <- 2
+
+
 tabla$breast.quad[tabla$breast.quad == 4] <- 6
 tabla$breast.quad[tabla$breast.quad == 3] <- 4
 tabla$breast.quad[tabla$breast.quad == 6] <- 3
