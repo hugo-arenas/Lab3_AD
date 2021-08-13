@@ -62,13 +62,14 @@ tabla <- tabla[!bool.values,]
 bool.values <- tabla$breast.quad =='?'
 tabla <- tabla[!bool.values,]
 
+#Se guardan las columnas de la tabla para ser utilizadas más adelante.
 menopause <- as.factor(tabla$menopause)
 node.caps <- as.factor(tabla$node.caps)
 deg.malig <- as.factor(tabla$deg.malig)
 breast <- as.factor(tabla$breast)
 irradiat <- as.factor(tabla$irradiat)
 
-
+#Todas las variables, menos la clase, se vuelven numéricas.
 tabla$class <- as.factor(tabla$class)
 tabla$age <- unclass(as.factor(tabla$age)) 
 tabla$menopause <- unclass(as.factor(tabla$menopause)) 
@@ -80,6 +81,7 @@ tabla$breast <- unclass(as.factor(tabla$breast))
 tabla$breast.quad <- unclass(as.factor(tabla$breast.quad)) 
 tabla$irradiat <- unclass(as.factor(tabla$irradiat))
 
+#Se reordenan los valores de tumor.size.
 tabla$tumor.size[tabla$tumor.size == 10] <- 12
 tabla$tumor.size[tabla$tumor.size == 9] <- 10
 tabla$tumor.size[tabla$tumor.size == 8] <- 9
@@ -91,11 +93,12 @@ tabla$tumor.size[tabla$tumor.size == 3] <- 4
 tabla$tumor.size[tabla$tumor.size == 2] <- 3
 tabla$tumor.size[tabla$tumor.size == 12] <- 2
 
-
+#Se reordenan los valores de breast.quad.
 tabla$breast.quad[tabla$breast.quad == 4] <- 6
 tabla$breast.quad[tabla$breast.quad == 3] <- 4
 tabla$breast.quad[tabla$breast.quad == 6] <- 3
 
+#Se reordenan los valores de inv.nodes.
 tabla$inv.nodes[tabla$inv.nodes == 2] <- 8
 tabla$inv.nodes[tabla$inv.nodes == 3] <- 9
 tabla$inv.nodes[tabla$inv.nodes == 4] <- 10
@@ -226,17 +229,19 @@ tabla.reglas$tumor.size = cut(tabla.reglas$tumor.size, breaks = tumor.size, labe
 tabla.reglas$inv.nodes = cut(tabla.reglas$inv.nodes, breaks = inv.nodes, labels = inv.nodes.names)
 tabla.reglas$breast.quad = cut(tabla.reglas$breast.quad, breaks = breast.quad, labels = breast.quad.names)
 
-
+#Se utiliza la función apriori para obtener las reglas respecto a la clase
+#no-recurrence-events, con un soporte mínimo de 0.2.
 reglas = apriori(
   data = tabla.reglas, 
   parameter=list(support = 0.2, minlen = 2, maxlen = 6, target="rules"),
   appearance=list(rhs = c("class=no-recurrence-events"))
 )
 
+#La reglas se orden por confianza de forma decreciente.
 con <- sort(x = reglas, decreasing = TRUE, by = "confidence")
-
+#La reglas se orden por soporte de forma decreciente.
 sop <- sort(x = reglas, decreasing = TRUE, by = "support")
-
+#La reglas se orden por lift de forma decreciente.
 lift <-sort(x = reglas, decreasing = TRUE, by = "lift")
 
 print("Muestra las 4 reglas con mayor confianza para no-recurrence-events.")
@@ -251,16 +256,18 @@ library(arulesViz)
 # Grafico de dispersion coloreado en funcion del lift para regla 1.
 print(plot(reglas, measure = c("support", "confidence"), shading = "lift"))
 
+#Se utiliza la función apriori para obtener las reglas respecto a la clase
+#recurrence-events, con un soporte mínimo de 0.018.
 reglas2 = apriori(
   data = tabla.reglas, 
   parameter=list(support = 0.018, minlen = 2, maxlen = 6, target="rules"),
   appearance=list(rhs = c("class=recurrence-events"))
 )
-
+#La reglas se orden por confianza de forma decreciente.
 con2 <- sort(x = reglas2, decreasing = TRUE, by = "confidence")
-
+#La reglas se orden por soporte de forma decreciente.
 sop2 <- sort(x = reglas2, decreasing = TRUE, by = "support")
-
+#La reglas se orden por lift de forma decreciente.
 lift2 <-sort(x = reglas2, decreasing = TRUE, by = "lift")
 
 print("Muestra las 4 reglas con mayor confianza para recurrence-events.")
